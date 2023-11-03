@@ -70,10 +70,6 @@ router.get("/:id", async (req, res) => {
   });
 
 
-
-
-
-
 // update product
 router.put("/:id", (req, res) => {
   // update product data
@@ -82,6 +78,13 @@ router.put("/:id", (req, res) => {
       id: req.params.id,
     },
   })
+    .then(() => {
+      return Product.findOne({
+        where: {
+          id: req.params.id,
+        },
+      });
+    })
     .then((product) => {
       if (req.body.tagIds && req.body.tagIds.length) {
         ProductTag.findAll({
@@ -107,10 +110,14 @@ router.put("/:id", (req, res) => {
             ProductTag.destroy({ where: { id: productTagsToRemove } }),
             ProductTag.bulkCreate(newProductTags),
           ]);
+        })
+        .then(() => {
+          return res.json(product);
         });
+      } else {
+        // if no product tags, just respond
+       return res.json(product);
       }
-
-      return res.json(product);
     })
     .catch((err) => {
       // console.log(err);
