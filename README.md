@@ -39,7 +39,7 @@ To start the server, type npm run watch in the terminal. This will sync the Sequ
 
 ## Testing
 
-To test the API routes, you can use a tool like [Insomnia](). The available routes are:
+To test the API routes, you can use a tool like [Insomnia](https://docs.insomnia.rest/). The available routes are:
 
 - GET /api/categories to get all categories
 - GET /api/categories/:id to get one category by id
