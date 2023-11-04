@@ -49,11 +49,14 @@ router.put("/:id", async (req, res) => {
       },
     
     })
-    if (!tagData) {
+    if (!tagData[0]) {
       res.status(404).json({ message: "No tag found with that id!"});
       return;
     }
-    res.status(200).json(tagData);
+
+    const updatedTag = await Tag.findByPk(req.params.id);
+    
+    res.status(200).json(updatedTag);
   } catch (error) {
     res.status(400).json(error);
   }
